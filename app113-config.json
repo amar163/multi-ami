@@ -5,7 +5,7 @@
             "amiConfig": {
                 "appName": "app113",
                 "amiId": "ami-05692172625678b4e",
-                "bucketName": "demos-s3-lambda",
+                "bucketName": "demos-s3-lambda11",
                 "installScript": "app113-install.sh",
                 "targetAmiName": "manasa-east-app113",
                 "region": "us-east-2",
@@ -18,7 +18,7 @@
             "amiConfig": {
                 "appName": "app113",
                 "amiId": "ami-05692172625678b4e",
-                "bucketName": "demos-s3-lambda",
+                "bucketName": "demos-s3-lambda11",
                 "installScript": "app113-install.sh",
                 "targetAmiName": "manasa-west-app113",
                 "region": "us-west-1",
