@@ -26,8 +26,8 @@ cmd.exe /c winrm set "winrm/config/client" '@{AllowUnencrypted="false"}'
 cmd.exe /c winrm set "winrm/config/service/auth" '@{Basic="true"}'
 cmd.exe /c winrm set "winrm/config/client/auth" '@{Basic="true"}'
 cmd.exe /c winrm set "winrm/config/service/auth" '@{CredSSP="true"}'
-cmd.exe /c winrm set "winrm/config/listener?Address=*+Transport=HTTPS" "@{Port=`"5986`";Hostname=`"$($ENV:COMPUTERNAME)`";CertificateThumbprint=`"$($Cert.Thumbprint)`"}"
-cmd.exe /c netsh advfirewall firewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=5986 protocol=TCP action=allow
+cmd.exe /c winrm set "winrm/config/listener?Address=*+Transport=HTTPS" "@{Port=`"3389`";Hostname=`"$($ENV:COMPUTERNAME)`";CertificateThumbprint=`"$($Cert.Thumbprint)`"}"
+cmd.exe /c netsh advfirewall firewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=3389 protocol=TCP action=allow
 
 # Restart WinRM, and set it so that it auto-launches on startup
 Stop-Service -Name "WinRM" -ErrorAction Stop
