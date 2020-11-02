@@ -23,7 +23,7 @@
                 "targetAmiName": "manasa-west-app113",
                 "region": "us-west-1",
                 "amissmid": "app113-ami-gold",
-                "packerFile": "common-packer.json"
+                "packerFile": "common-packer-windows.json"
             }
         }
     ]

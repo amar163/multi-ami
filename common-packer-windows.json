@@ -7,21 +7,21 @@
     },
     "builders": [
         {
-            "ami_name": "{{user `targetAmiName`}}-{{timestamp}}",
+            "ami_name": "Windows-{{user `targetAmiName`}}-{{timestamp}}",
             "instance_type": "t2.micro",
             "region": "{{user `region`}}",
             "source_ami": "{{user `baseimage`}}",
-            "ssh_username": "ubuntu",
+            "winrm_username": "Administrator",
             "type": "amazon-ebs"
         }
     ],
     "provisioners": [
         {
-            "type": "shell",
+            "type": "powershell",
             "scripts": [
                 "{{user `installScript`}}"
             ],
-            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "execute_command": "powershell -executionpolicy bypass '& { if (Test-Path variable:global:ProgressPreference){$ProgressPreference='SilentlyContinue'};. {{.Vars}}; &'{{.Path}}'; exit $LastExitCode }'",
             "pause_before": "10s"
         }
     ]

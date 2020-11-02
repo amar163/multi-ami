@@ -10,7 +10,7 @@
                 "targetAmiName": "manasa-east-app112",
                 "region": "us-east-2",
                 "amissmid": "app112-ami-gold",
-                "packerFile": "common-packer.json"
+                "packerFile": "common-packer-linux.json"
             }
         },
         {
@@ -23,7 +23,7 @@
                 "targetAmiName": "manasa-west-app112",
                 "region": "us-west-1",
                 "amissmid": "app112-ami-gold",
-                "packerFile": "common-packer.json"
+                "packerFile": "common-packer-linux.json"
             }
         }
     ]
