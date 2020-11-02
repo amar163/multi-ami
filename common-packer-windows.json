@@ -15,7 +15,7 @@
             "winrm_username": "Administrator",
             "communicator": "winrm",
             "winrm_port": 5986,
-            "winrm_timeout": "5m",
+            "winrm_timeout": "15m",
             "winrm_use_ssl": true,
             "winrm_insecure": true
         }
