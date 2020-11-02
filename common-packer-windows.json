@@ -21,7 +21,7 @@
             "scripts": [
                 "{{user `installScript`}}"
             ],
-            "execute_command": "powershell -executionpolicy bypass '& { if (Test-Path variable:global:ProgressPreference){$ProgressPreference='SilentlyContinue'};. {{.Vars}}; &'{{.Path}}'; exit $LastExitCode }'",
+            "execute_command": "powershell -executionpolicy bypass \"& { if (Test-Path variable:global:ProgressPreference){$ProgressPreference='SilentlyContinue'};. {{.Vars}}; &'{{.Path}}'; exit $LastExitCode }\"",
             "pause_before": "10s"
         }
     ]
