@@ -11,8 +11,13 @@
             "instance_type": "t2.micro",
             "region": "{{user `region`}}",
             "source_ami": "{{user `baseimage`}}",
+            "type": "amazon-ebs",
             "winrm_username": "Administrator",
-            "type": "amazon-ebs"
+            "communicator": "winrm",
+            "winrm_port": 5986,
+            "winrm_timeout": "5m",
+            "winrm_use_ssl": true,
+            "winrm_insecure": true
         }
     ],
     "provisioners": [
