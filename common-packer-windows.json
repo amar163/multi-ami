@@ -12,22 +12,37 @@
             "region": "{{user `region`}}",
             "source_ami": "{{user `baseimage`}}",
             "type": "amazon-ebs",
+            "user_data_file": "./bootstrap_win.txt",
             "winrm_username": "Administrator",
-            "communicator": "winrm",
-            "winrm_port": 5986,
-            "winrm_timeout": "15m",
-            "winrm_use_ssl": true,
-            "winrm_insecure": true
+            "winrm_password": "SuperS3cr3t!!!!",
+            "communicator": "winrm"
         }
     ],
     "provisioners": [
         {
             "type": "powershell",
+            "environment_vars": ["DEVOPS_LIFE_IMPROVER=PACKER"],
+            "inline": [
+              "Write-Host \"HELLO NEW USER; WELCOME TO $Env:DEVOPS_LIFE_IMPROVER\"",
+              "Write-Host \"You need to use backtick escapes when using\"",
+              "Write-Host \"characters such as DOLLAR`$ directly in a command\"",
+              "Write-Host \"or in your own scripts.\""
+            ]
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
             "scripts": [
-                "{{user `installScript`}}"
+                "./{{user `installScript`}}"
             ],
-            "execute_command": "powershell -executionpolicy bypass \"& { if (Test-Path variable:global:ProgressPreference){$ProgressPreference='SilentlyContinue'};. {{.Vars}}; &'{{.Path}}'; exit $LastExitCode }\"",
-            "pause_before": "10s"
+            "environment_vars": [
+                "VAR1=A$Dollar",
+                "VAR2=A`Backtick",
+                "VAR3=A'SingleQuote",
+                "VAR4=A\"DoubleQuote"
+            ]
         }
     ]
 }

@@ -6,7 +6,7 @@
                 "appName": "app113",
                 "amiId": "ami-05692172625678b4e",
                 "bucketName": "demos-s3-lambda11",
-                "installScript": "userdata.ps1",
+                "installScript": "sample_script.ps1",
                 "targetAmiName": "manasa-east-app113",
                 "region": "us-east-2",
                 "amissmid": "app113-ami-gold",
