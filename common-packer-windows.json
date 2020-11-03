@@ -12,7 +12,7 @@
             "region": "{{user `region`}}",
             "source_ami": "{{user `baseimage`}}",
             "type": "amazon-ebs",
-            "user_data_file": "./bootstrap_win.txt",
+            "user_data_file": "/tmp/bootstrap_win.txt",
             "winrm_username": "Administrator",
             "winrm_password": "SuperS3cr3t!!!!",
             "communicator": "winrm"
