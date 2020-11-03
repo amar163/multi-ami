@@ -1,49 +1,56 @@
 {
     "variables": {
-        "region": "us-east-2",
-        "baseimage": "",
-        "targetAmiName": "",
-        "installScript": "",
-        "userdata_file": ""
+      "region": "us-east-2",
+      "baseimage": "",
+      "targetAmiName": "",
+      "installScript": "",
+      "userdata_file": ""
     },
     "builders": [
-        {
-            "ami_name": "Windows-{{user `targetAmiName`}}-{{timestamp}}",
-            "instance_type": "t2.micro",
-            "region": "{{user `region`}}",
-            "source_ami": "{{user `baseimage`}}",
-            "type": "amazon-ebs",
-            "user_data_file": "{{user `userdata_file`}}",
-            "winrm_username": "Administrator",
-            "winrm_password": "SuperS3cr3t!!!!",
-            "communicator": "winrm"
-        }
+      {
+        "type": "amazon-ebs",
+        "region": "{{ user `region` }}",
+        "instance_type": "t2.micro",
+        "source_ami_filter": {
+          "filters": {
+            "virtualization-type": "hvm",
+            "name": "*Windows_Server-2012-R2*English-64Bit-Base*",
+            "root-device-type": "ebs"
+          },
+          "most_recent": true,
+          "owners": "amazon"
+        },
+        "ami_name": "Windows-{{user `targetAmiName`}}-{{timestamp}}",
+        "user_data_file": "{{user `userdata_file`}}",
+        "communicator": "winrm",
+        "winrm_username": "Administrator",
+        "winrm_password": "SuperS3cr3t!!!!"
+      }
     ],
     "provisioners": [
-        {
-            "type": "powershell",
-            "environment_vars": ["DEVOPS_LIFE_IMPROVER=PACKER"],
-            "inline": [
-              "Write-Host \"HELLO NEW USER; WELCOME TO $Env:DEVOPS_LIFE_IMPROVER\"",
-              "Write-Host \"You need to use backtick escapes when using\"",
-              "Write-Host \"characters such as DOLLAR`$ directly in a command\"",
-              "Write-Host \"or in your own scripts.\""
-            ]
-        },
-        {
-            "type": "windows-restart"
-        },
-        {
-            "type": "powershell",
-            "scripts": [
-                "{{user `installScript`}}"
-            ],
-            "environment_vars": [
-                "VAR1=A$Dollar",
-                "VAR2=A`Backtick",
-                "VAR3=A'SingleQuote",
-                "VAR4=A\"DoubleQuote"
-            ]
-        }
+      {
+        "type": "powershell",
+        "environment_vars": ["DEVOPS_LIFE_IMPROVER=PACKER"],
+        "inline": [
+          "Write-Host \"HELLO NEW USER; WELCOME TO $Env:DEVOPS_LIFE_IMPROVER\"",
+          "Write-Host \"You need to use backtick escapes when using\"",
+          "Write-Host \"characters such as DOLLAR`$ directly in a command\"",
+          "Write-Host \"or in your own scripts.\""
+        ]
+      },
+      {
+        "type": "windows-restart"
+      },
+      {
+        "script": "{{user `installScript`}}",
+        "type": "powershell",
+        "environment_vars": [
+          "VAR1=A$Dollar",
+          "VAR2=A`Backtick",
+          "VAR3=A'SingleQuote",
+          "VAR4=A\"DoubleQuote"
+        ]
+      }
     ]
-}
+  }
+  
