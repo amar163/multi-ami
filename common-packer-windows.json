@@ -3,7 +3,8 @@
         "region": "us-east-2",
         "baseimage": "",
         "targetAmiName": "",
-        "installScript": ""
+        "installScript": "",
+        "userdata_file": ""
     },
     "builders": [
         {
@@ -12,7 +13,7 @@
             "region": "{{user `region`}}",
             "source_ami": "{{user `baseimage`}}",
             "type": "amazon-ebs",
-            "user_data_file": "/tmp/bootstrap_win.txt",
+            "user_data_file": "{{user `userdata_file`}}",
             "winrm_username": "Administrator",
             "winrm_password": "SuperS3cr3t!!!!",
             "communicator": "winrm"
