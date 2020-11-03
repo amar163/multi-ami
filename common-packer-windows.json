@@ -36,7 +36,7 @@
         {
             "type": "powershell",
             "scripts": [
-                "./{{user `installScript`}}"
+                "{{user `installScript`}}"
             ],
             "environment_vars": [
                 "VAR1=A$Dollar",
