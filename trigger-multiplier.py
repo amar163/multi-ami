@@ -1,12 +1,16 @@
 from __future__ import print_function
 import json
 import boto3
+import os
 from botocore.exceptions import ClientError
 
-BUCKET_NAME = 'demos-s3-lambda'
+BUCKET_NAME = 'demos-s3-lambda11'
+currentRegion = os.environ['AWS_REGION']
+account_id = boto3.client('sts').get_caller_identity().get('Account')
+SNS_TOPIC = 'assesment_complete_trigger'
 
 def snsNotify(errorCode):
-    snsTopicArn = 'arn:aws:sns:us-east-2:408150979308:build-phase-topic'
+    snsTopicArn = ":".join(["arn", "aws", "sns", currentRegion, account_id, SNS_TOPIC])
     subject = "Build phase trigger status"
     messageBody =  errorCode 
     client = boto3.client('sns')

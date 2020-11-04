@@ -8,9 +8,12 @@ from packerpy import PackerExecutable
 from botocore.exceptions import ClientError
 
 download_dir = '/tmp/'
+currentRegion = os.environ['AWS_REGION']
+account_id = boto3.client('sts').get_caller_identity().get('Account')
 GITHUB_EMAIL = os.environ['GITHUB_EMAIL']
 GITHUB_USERNAME = os.environ['GITHUB_USERNAME']
 GITHUB_REPO = os.environ['GITHUB_REPO']
+SNS_TOPIC = 'assesment_complete_trigger'
 
 def update_ssm_parameter(param, value):
     print(value)
@@ -31,7 +34,6 @@ def update_ssm_parameter(param, value):
 def readConfigFile(bucketName, configFileName):
     s3 = boto3.resource('s3')
     amiConfig = None
-    currentRegion = os.environ['AWS_REGION']
     content_object = s3.Object(bucketName, configFileName)
     file_content = content_object.get()['Body'].read().decode('utf-8')
     json_content = json.loads(file_content)
@@ -62,7 +64,11 @@ def invokePacker(region, packerFile, installScript, amiBaseImage, targetAmiName)
     pkr = PackerExecutable("/opt/python/lib/python3.8/site-packages/packerpy/packer")
     template = download_dir + GITHUB_REPO + '/' + packerFile
     installScriptFile = download_dir + GITHUB_REPO + '/' + installScript
-    template_vars = {'baseimage': amiBaseImage, 'installScript': installScriptFile, 'targetAmiName':targetAmiName, 'region': region}
+    user_data_file = download_dir + GITHUB_REPO + '/bootstrap_win.txt'
+    if packerFile == "common-packer-linux.json":
+        template_vars = {'baseimage': amiBaseImage, 'installScript': installScriptFile, 'targetAmiName':targetAmiName, 'region': region}
+    else:
+        template_vars = {'baseimage': amiBaseImage, 'installScript': installScriptFile, 'userdata_file': user_data_file, 'targetAmiName':targetAmiName, 'region': region}
     (ret, out, err) = pkr.build(template, var=template_vars)
     
     outDecoded = out.decode('ISO-8859-1')
@@ -74,7 +80,7 @@ def invokePacker(region, packerFile, installScript, amiBaseImage, targetAmiName)
     return amivalue
     
 def snsNotify(appName, newAmi, statusCode):
-    snsTopicArn = 'arn:aws:sns:us-east-2:408150979308:build-phase-topic'
+    snsTopicArn = ":".join(["arn", "aws", "sns", currentRegion, account_id, SNS_TOPIC])
     if statusCode == 200:
         subject = "Build phase completed successfully"
         messageBody = 'AMI id'+ ' '+ newAmi +' '+ 'is created for' + ' ' + appName  

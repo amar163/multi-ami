@@ -59,16 +59,33 @@ resource "aws_inspector_assessment_template" "bar-template" {
 resource "null_resource" "example1" {
   provisioner "remote-exec" {
     connection {
-      type = "ssh"
-      user = "ansible"
-      password = "ansible123"
+      type = "winrm"
+      user = "Administrator"
+      password = "SuperS3cr3t!!!!"
       host = aws_instance.inspector-instance.public_ip
     }
     inline = [
-      "wget https://d1wk0tztpsntt1.cloudfront.net/linux/latest/install -P /tmp/",
-      "sudo bash /tmp/install",
-      "sudo systemctl start awsagent"
+      "(new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:UsersAdministratorDesktopAWSAgentInstall.exe')",
+      "./AWSAgentInstall.exe install USEPROXY=1"
     ]
   }
   depends_on = [aws_instance.inspector-instance]
 }
+
+
+# resource "null_resource" "example1" {
+#   provisioner "remote-exec" {
+#     connection {
+#       type = "ssh"
+#       user = "ansible"
+#       password = "ansible123"
+#       host = aws_instance.inspector-instance.public_ip
+#     }
+#     inline = [
+#       "wget https://d1wk0tztpsntt1.cloudfront.net/linux/latest/install -P /tmp/",
+#       "sudo bash /tmp/install",
+#       "sudo systemctl start awsagent"
+#     ]
+#   }
+#   depends_on = [aws_instance.inspector-instance]
+# }
