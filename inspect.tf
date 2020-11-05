@@ -5,7 +5,7 @@ resource "random_id" "id"{
 
 resource "aws_instance" "inspector-instance" {
   ami = var.AMI_ID
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   security_groups = ["${aws_security_group.sample_sg.name}"]
   user_data = file("bootstrap_win.txt")
   tags = {
