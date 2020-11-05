@@ -23,7 +23,18 @@ resource "aws_security_group" "sample_sg" {
     protocol = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+  ingress {
+    from_port = 5985
+    to_port = 5985
+    protocol = "WinRM-HTTP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 5986
+    to_port = 5986
+    protocol = "WinRM-HTTPS"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -65,12 +76,17 @@ resource "null_resource" "example1" {
       host = aws_instance.inspector-instance.public_ip
     }
     inline = [
-      "(new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:UsersAdministratorDesktopAWSAgentInstall.exe')",
+      "curl -O https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe",
       "AWSAgentInstall.exe install USEPROXY=1"
     ]
   }
   depends_on = [aws_instance.inspector-instance]
 }
+
+# inline = [
+#       "(new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:UsersAdministratorDesktopAWSAgentInstall.exe')",
+#       "AWSAgentInstall.exe install USEPROXY=1"
+#     ]
 
 
 # resource "null_resource" "example1" {
