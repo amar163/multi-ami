@@ -7,7 +7,7 @@ resource "aws_instance" "inspector-instance" {
   ami = var.AMI_ID
   instance_type = "t3.small"
   security_groups = ["${aws_security_group.sample_sg.name}"]
-
+  user_data = file("bootstrap_win.txt")
   tags = {
     Name = "InspectInstances-${random_id.id.hex}"
   }
@@ -16,23 +16,23 @@ resource "aws_instance" "inspector-instance" {
 }
 
 resource "aws_security_group" "sample_sg" {
-  name = "Allow SSH-${random_id.id.hex}"
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  name = "Allow WINRM-${random_id.id.hex}"
   ingress {
     from_port = 5985
     to_port = 5985
     protocol = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port = 5986
+    to_port = 5986
+    protocol = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
-    from_port   = 5986
-    to_port     = 5986
-    protocol    = "TCP"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
