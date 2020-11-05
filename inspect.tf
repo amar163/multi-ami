@@ -24,15 +24,9 @@ resource "aws_security_group" "sample_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port = 5985
-    to_port = 5985
-    protocol = "WinRM-HTTP"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 5986
-    to_port = 5986
-    protocol = "WinRM-HTTPS"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
