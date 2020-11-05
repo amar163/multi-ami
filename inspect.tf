@@ -66,7 +66,7 @@ resource "null_resource" "example1" {
     }
     inline = [
       "(new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:UsersAdministratorDesktopAWSAgentInstall.exe')",
-      "./AWSAgentInstall.exe install USEPROXY=1"
+      "AWSAgentInstall.exe install USEPROXY=1"
     ]
   }
   depends_on = [aws_instance.inspector-instance]
