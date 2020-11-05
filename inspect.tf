@@ -71,7 +71,7 @@ resource "null_resource" "example1" {
     }
     inline = [
       "curl -O https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe",
-      "AWSAgentInstall.exe install USEPROXY=1"
+      "AWSAgentInstall.exe /q install USEPROXY=1"
     ]
   }
   depends_on = [aws_instance.inspector-instance]
