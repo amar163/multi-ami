@@ -25,14 +25,14 @@ resource "aws_security_group" "sample_sg" {
   }
   ingress {
     from_port = 5985
-    to_port = 0
-    protocol = "winrm-http-tcp"
+    to_port = 5985
+    protocol = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
     from_port   = 5986
-    to_port     = 0
-    protocol    = "winrm-https-tcp"
+    to_port     = 5986
+    protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
