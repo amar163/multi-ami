@@ -24,15 +24,15 @@ resource "aws_security_group" "sample_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port = 0
+    from_port = 5985
     to_port = 0
-    protocol = "-1"
+    protocol = "winrm-http-tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port   = 0
+    from_port   = 5986
     to_port     = 0
-    protocol    = "-1"
+    protocol    = "winrm-https-tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -55,11 +55,14 @@ resource "aws_inspector_assessment_template" "bar-template" {
   duration   = 180
   rules_package_arns = [
     "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-JnA8Zp85",
-    "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-m8r61nnh",
-    "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-cE4kTR30",
-    "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-AxKmMHPX",
+    "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-cE4kTR30"
   ]
 }
+
+    # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-JnA8Zp85",
+    # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-m8r61nnh",
+    # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-cE4kTR30",
+    # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-AxKmMHPX",
 
 resource "null_resource" "example1" {
   provisioner "remote-exec" {
