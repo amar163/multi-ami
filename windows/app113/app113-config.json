@@ -19,7 +19,7 @@
                 "appName": "app113",
                 "osType": "linux",
                 "amiId": "ami-05692172625678b4e",
-                "installScript": "app113-install.sh",
+                "installScript": "sample_script.ps1",
                 "targetAmiName": "gold-ami-us-west1-app113",
                 "region": "us-west-1",
                 "amissmid": "app113-ami-gold",
