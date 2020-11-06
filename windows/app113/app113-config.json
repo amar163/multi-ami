@@ -1,0 +1,30 @@
+{
+    "regionConfig": [
+        {
+            "region": "us-east-2",
+            "amiConfig": {
+                "appName": "app113",
+                "osType": "windows",
+                "amiId": "ami-05692172625678b4e",
+                "installScript": "sample_script.ps1",
+                "targetAmiName": "gold-ami-us-east2-app113",
+                "region": "us-east-2",
+                "amissmid": "app113-ami-gold",
+                "packerFile": "common-packer-windows.json"
+            }
+        },
+        {
+            "region": "us-west-1",
+            "amiConfig": {
+                "appName": "app113",
+                "osType": "linux",
+                "amiId": "ami-05692172625678b4e",
+                "installScript": "app113-install.sh",
+                "targetAmiName": "gold-ami-us-west1-app113",
+                "region": "us-west-1",
+                "amissmid": "app113-ami-gold",
+                "packerFile": "common-packer-windows.json"
+            }
+        }
+    ]
+}

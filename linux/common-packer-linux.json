@@ -1,0 +1,28 @@
+{
+    "variables": {
+        "region": "us-east-2",
+        "baseimage": "",
+        "targetAmiName": "",
+        "installScript": ""
+    },
+    "builders": [
+        {
+            "ami_name": "Linux-{{user `targetAmiName`}}-{{timestamp}}",
+            "instance_type": "t2.micro",
+            "region": "{{user `region`}}",
+            "source_ami": "{{user `baseimage`}}",
+            "ssh_username": "ubuntu",
+            "type": "amazon-ebs"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": [
+                "{{user `installScript`}}"
+            ],
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "pause_before": "10s"
+        }
+    ]
+}
