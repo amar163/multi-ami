@@ -9,7 +9,7 @@
     "builders": [
       {
         "ami_name": "Windows-{{user `targetAmiName`}}-{{timestamp}}",
-        "instance_type": "t2.micro",
+        "instance_type": "t3.small",
         "region": "{{user `region`}}",
         "source_ami": "{{user `baseimage`}}",
         "type": "amazon-ebs",
