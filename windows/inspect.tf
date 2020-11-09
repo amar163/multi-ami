@@ -67,6 +67,7 @@ resource "null_resource" "example1" {
       host = aws_instance.inspector-instance.public_ip
     }
     inline = [
+      "del C:/Temp/terraform*.cmd",
       "curl -O https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe",
       "AWSAgentInstall.exe /q install USEPROXY=1"
     ]

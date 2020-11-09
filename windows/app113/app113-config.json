@@ -9,7 +9,7 @@
                 "installScript": "sample_script.ps1",
                 "targetAmiName": "gold-ami-us-east2-app113",
                 "region": "us-east-2",
-                "amissmid": "app113-ami-gold",
+                "amissmid": "app113-windows-ami-gold",
                 "packerFile": "common-packer-windows.json"
             }
         },

@@ -9,7 +9,7 @@
                 "installScript": "install.sh",
                 "targetAmiName": "gold-ami-us-east2-app112",
                 "region": "us-east-2",
-                "amissmid": "app112-ami-gold",
+                "amissmid": "app112-linux-ami-gold",
                 "packerFile": "common-packer-linux.json"
             }
         },
