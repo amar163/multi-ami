@@ -67,7 +67,7 @@ resource "null_resource" "example1" {
       host = aws_instance.inspector-instance.public_ip
     }
     inline = [
-      "curl -O https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe",
+      "powershell (new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:\\Users\\Administrator\\AWSAgentInstall.exe')",
       "AWSAgentInstall.exe /q install USEPROXY=1"
     ]
   }
