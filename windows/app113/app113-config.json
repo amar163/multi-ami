@@ -7,11 +7,19 @@
                 "osType": "windows",
                 "amiId": "ami-05692172625678b4e",
                 "installScript": "sample_script.ps1",
-                "targetAmiName": "gold-ami-us-east2-app113",
+                "targetAmiName": "app113-gold-ami-us-east2",
                 "region": "us-east-2",
                 "amissmid": "app113-windows-ami-gold",
                 "packerFile": "common-packer-windows.json"
-            }
+            },
+            "distributions": [
+                {
+                    "destRegion": "us-east-1",
+                    "destAccount": "585152918139",
+                    "destAccountRole": "arn:aws:iam::816846994641:role/crossAccountAMI-Role"
+                }
+                
+            ]
         },
         {
             "region": "us-west-1",
@@ -20,9 +28,9 @@
                 "osType": "windows",
                 "amiId": "ami-05692172625678b4e",
                 "installScript": "sample_script.ps1",
-                "targetAmiName": "gold-ami-us-west1-app113",
+                "targetAmiName": "app113-gold-ami-us-west1",
                 "region": "us-west-1",
-                "amissmid": "app113-ami-gold",
+                "amissmid": "app113-windows-ami-gold",
                 "packerFile": "common-packer-windows.json"
             }
         }

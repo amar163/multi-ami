@@ -7,7 +7,7 @@
                 "osType": "linux",
                 "amiId": "ami-05692172625678b4e",
                 "installScript": "install.sh",
-                "targetAmiName": "gold-ami-us-east2-app112",
+                "targetAmiName": "app112-gold-ami-us-east2",
                 "region": "us-east-2",
                 "amissmid": "app112-linux-ami-gold",
                 "packerFile": "common-packer-linux.json"
@@ -20,9 +20,9 @@
                 "osType": "linux",
                 "amiId": "ami-05692172625678b4e",
                 "installScript": "install.sh",
-                "targetAmiName": "gold-ami-us-west1-app112",
+                "targetAmiName": "app112-gold-ami-us-west1",
                 "region": "us-west-1",
-                "amissmid": "app112-ami-gold",
+                "amissmid": "app112-linux-ami-gold",
                 "packerFile": "common-packer-linux.json"
             }
         }
