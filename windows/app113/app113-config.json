@@ -17,7 +17,7 @@
             "region": "us-west-1",
             "amiConfig": {
                 "appName": "app113",
-                "osType": "linux",
+                "osType": "windows",
                 "amiId": "ami-05692172625678b4e",
                 "installScript": "sample_script.ps1",
                 "targetAmiName": "gold-ami-us-west1-app113",
