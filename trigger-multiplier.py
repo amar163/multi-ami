@@ -4,10 +4,10 @@ import boto3
 import os
 from botocore.exceptions import ClientError
 
-BUCKET_NAME = 'demos-s3-lambda11'
+BUCKET_NAME = os.environ['BUCKET_NAME']
 currentRegion = os.environ['AWS_REGION']
 account_id = boto3.client('sts').get_caller_identity().get('Account')
-SNS_TOPIC = 'assesment_complete_trigger'
+SNS_TOPIC = os.environ['SNS_TOPIC']
 
 def snsNotify(errorCode):
     snsTopicArn = ":".join(["arn", "aws", "sns", currentRegion, account_id, SNS_TOPIC])

@@ -14,7 +14,7 @@
             },
             "distributions": [
                 {
-                    "destRegion": "us-east-1",
+                    "destRegion": "us-west-1",
                     "destAccount": "585152918139",
                     "destAccountRole": "arn:aws:iam::816846994641:role/crossAccountAMI-Role"
                 }
@@ -32,7 +32,15 @@
                 "region": "us-west-1",
                 "amissmid": "app113-windows-ami-gold",
                 "packerFile": "common-packer-windows.json"
-            }
+            },
+            "distributions": [
+                {
+                    "destRegion": "us-east-2",
+                    "destAccount": "585152918139",
+                    "destAccountRole": "arn:aws:iam::816846994641:role/crossAccountAMI-Role"
+                }
+                
+            ]
         }
     ]
 }

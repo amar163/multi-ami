@@ -11,7 +11,15 @@
                 "region": "us-east-2",
                 "amissmid": "app112-linux-ami-gold",
                 "packerFile": "common-packer-linux.json"
-            }
+            },
+            "distributions": [
+                {
+                    "destRegion": "us-west-1",
+                    "destAccount": "585152918139",
+                    "destAccountRole": "arn:aws:iam::816846994641:role/crossAccountAMI-Role"
+                }
+                
+            ]
         },
         {
             "region": "us-west-1",
@@ -24,7 +32,15 @@
                 "region": "us-west-1",
                 "amissmid": "app112-linux-ami-gold",
                 "packerFile": "common-packer-linux.json"
-            }
+            },
+            "distributions": [
+                {
+                    "destRegion": "us-east-2",
+                    "destAccount": "585152918139",
+                    "destAccountRole": "arn:aws:iam::816846994641:role/crossAccountAMI-Role"
+                }
+                
+            ]
         }
     ]
 }

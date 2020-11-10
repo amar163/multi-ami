@@ -1,6 +1,6 @@
 {
     "variables": {
-        "region": "us-east-2",
+        "region": "",
         "baseimage": "",
         "targetAmiName": "",
         "installScript": ""
