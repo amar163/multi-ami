@@ -75,21 +75,21 @@ resource "aws_inspector_assessment_template" "bar-template" {
     # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-cE4kTR30",
     # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-AxKmMHPX",
 
-# resource "null_resource" "example1" {
-#   provisioner "remote-exec" {
-#     connection {
-#       type = "winrm"
-#       user = "Administrator"
-#       password = "SuperS3cr3t!!!!"
-#       host = aws_instance.inspector-instance.public_ip
-#     }
-#     inline = [
-#       "powershell (new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:\\Users\\Administrator\\AWSAgentInstall.exe')",
-#       "AWSAgentInstall.exe /q install USEPROXY=1"
-#     ]
-#   }
-#   depends_on = [aws_instance.inspector-instance]
-# }
+resource "null_resource" "example1" {
+  provisioner "remote-exec" {
+    connection {
+      type = "winrm"
+      user = "Administrator"
+      password = "SuperS3cr3t!!!!"
+      host = aws_instance.inspector-instance.public_ip
+    }
+    inline = [
+      "powershell (new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:\\Users\\Administrator\\AWSAgentInstall.exe')",
+      "AWSAgentInstall.exe /q install USEPROXY=1"
+    ]
+  }
+  depends_on = [aws_instance.inspector-instance]
+}
 
 # inline = [
 #       "(new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:UsersAdministratorDesktopAWSAgentInstall.exe')",
