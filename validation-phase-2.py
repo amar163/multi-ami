@@ -117,8 +117,8 @@ def lambda_handler(event, context):
                     Subject=subject
                 )
 
-                snsNotify(ssmValue,200)
-                print("approved-"+ssmValue+" SSM parameter created/updated")
+                snsNotify(ssmValue,201)
+                print("AMI " + ssmValue + "failed the assessment test")
     
             else:
                 # Creating trigger for initiating distribution phase
@@ -148,8 +148,8 @@ def lambda_handler(event, context):
                     ]
                 )
             
-                snsNotify(ssmValue,201)
-                print("AMI " + ssmValue + "failed the assessment test")
+                snsNotify(ssmValue,200)
+                print("approved-"+ssmValue+" SSM parameter created/updated")
                 
             # Deleting resources created for assessment run    
             delete_resources(AMI_id, targetArn)
