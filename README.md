@@ -173,7 +173,7 @@ All policy jsons under folder distribution-phase-json.
 
 5. trust_policy.json content to be added to trust relationship in crossAccountAMI-Role role.
 
-3. Role/policies for lambda:
+6. Role/policies for lambda:
 Lambda, cloudwatchevents, SSM, IAM, STS, EC2
 
 Environment variables used:-
