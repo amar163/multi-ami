@@ -53,17 +53,19 @@ resource "aws_inspector_assessment_template" "bar-template" {
   rules_package_arns = data.aws_inspector_rules_packages.rules.arns
 }
 
+
 resource "null_resource" "example1" {
   provisioner "remote-exec" {
     connection {
-      type = "winrm"
-      user = "Administrator"
-      password = "SuperS3cr3t!!!!"
+      type = "ssh"
+      user = "ansible"
+      password = "ansible123"
       host = aws_instance.inspector-instance.public_ip
     }
     inline = [
-      "powershell (new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:\\Users\\Administrator\\AWSAgentInstall.exe')",
-      "AWSAgentInstall.exe /q install USEPROXY=1"
+      "wget https://d1wk0tztpsntt1.cloudfront.net/linux/latest/install -P /tmp/",
+      "sudo bash /tmp/install",
+      "sudo systemctl start awsagent"
     ]
   }
   depends_on = [aws_instance.inspector-instance]
