@@ -1,3 +1,22 @@
+provider "aws" {
+  region = var.region
+}
+
+# data "rule_packages" "us-east-2" {
+#   rules_package_arns = [
+#     "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-JnA8Zp85",
+#     "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-cE4kTR30"
+#   ]
+# }
+
+# data "rule_packages" "us-west-1" {
+#   rules_package_arns = [
+#     "arn:aws:inspector:us-west-1:166987590008:rulespackage/0-TKgzoVOa",
+#     "arn:aws:inspector:us-west-1:166987590008:rulespackage/0-TxmXimXF"
+#   ]
+# }
+
+data "aws_inspector_rules_packages" "rules" {}
 
 resource "random_id" "id"{
   byte_length = 8
@@ -47,10 +66,8 @@ resource "aws_inspector_assessment_template" "bar-template" {
   name       = "bar-template-${random_id.id.hex}"
   target_arn = aws_inspector_assessment_target.myinspect.arn
   duration   = 180
-  rules_package_arns = [
-    "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-JnA8Zp85",
-    "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-cE4kTR30"
-  ]
+
+  rules_package_arns = data.aws_inspector_rules_packages.rules.arns
 }
 
     # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-JnA8Zp85",
@@ -58,21 +75,21 @@ resource "aws_inspector_assessment_template" "bar-template" {
     # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-cE4kTR30",
     # "arn:aws:inspector:us-east-2:646659390643:rulespackage/0-AxKmMHPX",
 
-resource "null_resource" "example1" {
-  provisioner "remote-exec" {
-    connection {
-      type = "winrm"
-      user = "Administrator"
-      password = "SuperS3cr3t!!!!"
-      host = aws_instance.inspector-instance.public_ip
-    }
-    inline = [
-      "powershell (new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:\\Users\\Administrator\\AWSAgentInstall.exe')",
-      "AWSAgentInstall.exe /q install USEPROXY=1"
-    ]
-  }
-  depends_on = [aws_instance.inspector-instance]
-}
+# resource "null_resource" "example1" {
+#   provisioner "remote-exec" {
+#     connection {
+#       type = "winrm"
+#       user = "Administrator"
+#       password = "SuperS3cr3t!!!!"
+#       host = aws_instance.inspector-instance.public_ip
+#     }
+#     inline = [
+#       "powershell (new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:\\Users\\Administrator\\AWSAgentInstall.exe')",
+#       "AWSAgentInstall.exe /q install USEPROXY=1"
+#     ]
+#   }
+#   depends_on = [aws_instance.inspector-instance]
+# }
 
 # inline = [
 #       "(new-object System.Net.WebClient).DownloadFile('https://inspector-agent.amazonaws.com/windows/installer/latest/AWSAgentInstall.exe','C:UsersAdministratorDesktopAWSAgentInstall.exe')",

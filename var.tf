@@ -1,2 +1,1 @@
-variable "region" {}
-variable "AMI_ID" {}
+variable region {}
