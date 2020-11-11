@@ -137,7 +137,6 @@ def execute(ami_id,osType):
         (ret, out, err) = tf.apply(capture_output=True, skip_plan=True, **approve)
         while ret != 0:
             tf.destroy(capture_output=True, **approve)
-            # subprocess.call('rm -rf /tmp/terraform*.*', shell = True)
             tf = Terraform(working_dir=dir,terraform_bin_path='/opt/python/lib/python3.8/site-packages/terraform',variables={"region": currentRegion, "AMI_ID": ami_id})
             tf.init()
             approve = {"auto-approve": True}

@@ -77,7 +77,7 @@ def invokePacker(region, packerFile, installScript, amiBaseImage, targetAmiName,
     else:
         template = download_dir + GITHUB_REPO + '/' + osType  + '/' + packerFile
         installScriptFile = download_dir + GITHUB_REPO + '/' + osType + '/' + appName + '/' + installScript
-        user_data_file = download_dir + GITHUB_REPO + '/' + osType+ '/' + appName + '/bootstrap_win.txt'
+        user_data_file = download_dir + GITHUB_REPO + '/' + osType+ '/' + 'bootstrap_win.txt'
         template_vars = {'baseimage': amiBaseImage, 'installScript': installScriptFile, 'userdata_file': user_data_file, 'targetAmiName':targetAmiName, 'region': region}
     (ret, out, err) = pkr.build(template, var=template_vars)
     

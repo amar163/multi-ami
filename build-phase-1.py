@@ -9,6 +9,7 @@ currentRegion = os.environ['AWS_REGION']
 account_id = boto3.client('sts').get_caller_identity().get('Account')
 SNS_TOPIC = os.environ['SNS_TOPIC']
 
+# SNS notification
 def snsNotify(errorCode):
     snsTopicArn = ":".join(["arn", "aws", "sns", currentRegion, account_id, SNS_TOPIC])
     subject = "Build phase trigger status"
@@ -20,6 +21,7 @@ def snsNotify(errorCode):
             Subject = subject
     )
 
+# updating the corresponding config files in S3 bucket based on trigger from SSM param value change
 def download_file(BUCKET_NAME, ssmKey, ssmValue): 
     s3 = boto3.resource('s3')
     s3Client = boto3.client('s3')
@@ -47,7 +49,7 @@ def download_file(BUCKET_NAME, ssmKey, ssmValue):
                     ) 
             configFileCount += 1
             if configFileCount > 0:
-                snsNotify('trigger.py lambda has completed and updated'+ ' ' + str(configFileCount) + ' '+ 'config files')         
+                snsNotify('Build Phase1 lambda has completed and updated'+ ' ' + str(configFileCount) + ' '+ 'config files')         
         else:
             snsNotify('The folder' + ' ' + folderName +' '+'is not found or config files doesnot exist in this folder')              
     except ClientError as e:
@@ -63,4 +65,6 @@ def lambda_handler(event, context):
     ssmValue = ssm_parameter['Parameter']['Value']
     print(ssmKey) 
     print(ssmValue)
+    
+    # updating the corresponding config files in S3 bucket based on trigger from SSM param value change
     download_file(BUCKET_NAME, ssmKey, ssmValue)
