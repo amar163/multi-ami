@@ -116,6 +116,9 @@ def lambda_handler(event, context):
                     Message=messageBody,
                     Subject=subject
                 )
+
+                snsNotify(ssmValue,200)
+                print("approved-"+ssmValue+" SSM parameter created/updated")
     
             else:
                 # Creating trigger for initiating distribution phase
@@ -145,8 +148,8 @@ def lambda_handler(event, context):
                     ]
                 )
             
-            snsNotify(ssmValue,200)
-            print("approved-"+ssmValue+" SSM parameter created/updated")
+                snsNotify(ssmValue,201)
+                print("AMI " + ssmValue + "failed the assessment test")
                 
             # Deleting resources created for assessment run    
             delete_resources(AMI_id, targetArn)
@@ -291,6 +294,9 @@ def snsNotify(ssmValue, statusCode):
     if statusCode == 200:
         subject = "Validation Phase 2 completed successfully"
         messageBody = "approved-" + ssmValue + " SSM parameter created/updated"
+    if statusCode == 201:
+        subject = "Validation Phase 2 completed successfully"
+        messageBody = "AMI " + ssmValue + "failed the assessment test"
     elif statusCode == 400:
         subject = "Validation phase 2 did not complete successfully"
         messageBody = "Assessment run failed"
