@@ -17,7 +17,7 @@ download_dir = '/tmp/'
 SNS_TOPIC = os.environ['SNS_TOPIC']
 
 # Destnation lambda
-dest_lambda = "validation-2"
+# dest_lambda = "validation-phase-2"
 
 # GIT details
 GITHUB_EMAIL = os.environ['GITHUB_EMAIL']
@@ -30,33 +30,13 @@ def lambda_handler(event, context):
     
     print(event)
     ssmValue = event['detail']['name']
-    # account_id = event['account']
-    
-    
-    # ssmValue = "app113-windows-ami-gold"
-    # account_id = "585152918139"
     
     print(ssmValue)
     print(account_id)
-        
-    # os.system('cp /var/task/{*.tf,lambda_function.py} /tmp/')
-    
-    # s3 = boto3.resource('s3')
-    # s3Client = boto3.client('s3')
-    # try:
-    #     my_bucket = s3.Bucket(BUCKET_NAME)
-    #     for s3_object in my_bucket.objects.all():
-    #       filename = s3_object.key
-    #       s3Client.download_file(BUCKET_NAME, filename, f'{download_dir}{filename}')
-    # except ClientError as e:
-    #     return False
     
     # Get Config file name
-    # appName = ssmValue[:ssmValue.index('-')]
     osType = ssmValue.split("-")[1]
-    # osType = appName + "-config.json"
     print("osType is "+osType)
-    
     
     # git clone
     checkoutFilesFromGit()
@@ -79,7 +59,7 @@ def lambda_handler(event, context):
             subscribe_to_event(template_arn)
             
             # creating trigger for validation phase 2 lambda 
-            trigger_lambda()
+            # trigger_lambda()
             
             # Running assessment template and tagging template
             start_assessment_run(template_arn, ssmValue)
@@ -87,23 +67,15 @@ def lambda_handler(event, context):
             # SNS notify for successful run
             snsNotify(ssmValue,200)
             print("Validation Phase 1 completed successfully")
-            # return {
-            #     'statusCode': 200,
-            #     'body': json.dumps('Validation Phase 1 completed successfully')
-            # }
+            
         else:
+            # SNS notify for terraform failure
             snsNotify(ssmValue,400)
             print("Terraform execution failed")
-            # return {
-            #     'statusCode': 400,
-            #     'body': json.dumps('Terraform execution failed')
-            # }
+            
     else:
         snsNotify(ssmValue,401)
-        return {
-            'statusCode': 401,
-            'body': json.dumps('No such SSM parameter is available')
-        }
+        print("No such SSM parameter is available")
 
 
 

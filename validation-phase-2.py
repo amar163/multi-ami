@@ -104,7 +104,7 @@ def lambda_handler(event, context):
             if len(high_severities_list) > 1:
     
                 subject = "There is High Severity Issue in the assement run"
-                messageBody = ("High severity issue is reported in assesment run" + runArn + "\n\n" +
+                messageBody = ("High severity issue is reported in assesment run " + runArn + "\n\n" +
                               "Please check the  detailed report here : " +
                               "s3://" + BUCKET_NAME + "/" + runArn.split(":")[5] + "/" + reportFileName)
     
@@ -122,7 +122,7 @@ def lambda_handler(event, context):
     
             else:
                 # Creating trigger for initiating distribution phase
-                trigger_lambda()
+                # trigger_lambda()
                 
                 # Getting SSM value
                 ssmValue = ssm_name(template_arn)
@@ -153,18 +153,9 @@ def lambda_handler(event, context):
                 
             # Deleting resources created for assessment run    
             delete_resources(AMI_id, targetArn)
-            # return {
-            #     'statusCode': 200,
-            #     'body': json.dumps('approved-'+ssmValue+' SSM parameter created/updated')
-            # }
         else:
             snsNotify(ssmValue,400)
             print("Assessment run failed")
-            # return {
-            #     'statusCode': 400,
-            #     'body': json.dumps('Assessment run failed')
-            # }
-
 
 
 # uploading assessment report to s3

@@ -28,16 +28,7 @@ def lambda_handler(event, context):
     osType = ssmKey.split("-")[2]
     configFileName = osType + "-base-image/" + appName + "-config.json"
     
-    
-    # with open("dist.json", "r") as json_file:
-    #   dist = json.load(json_file)  
-
-    # sourceRegion = dist['sourceAmiRegion']
-    
-    # SNS variables
-    # subject = "Distribution phase status"
-    # snsTopicArn = ":".join(["arn", "aws", "sns", sourceRegion, srcAccount, SNS_TOPIC])
-    
+    # Read config file
     dist = readConfigFile(BUCKET_NAME, configFileName)
     
     for dest in dist:
@@ -55,7 +46,7 @@ def lambda_handler(event, context):
             dest_ec2 = boto3.client('ec2', region_name=destRegion)
             
             # copying approved AMI into same account
-            response = dest_ec2.copy_image(Name=ssmKey, Description=f"Copy of {ssmValue}", SourceImageId=ssmValue, currentRegion=currentRegion)
+            response = dest_ec2.copy_image(Name=ssmKey, Description=f"Copy of {ssmValue}", SourceImageId=ssmValue, SourceRegion=currentRegion)
             if response['ResponseMetadata']['HTTPStatusCode'] == 200:
                 validation_count = validation_count + 1
 
@@ -103,17 +94,9 @@ def lambda_handler(event, context):
     if validation_count == dist_count:
         snsNotify(200)
         print("AMI Copying initiated successfully")
-        # return {
-        #     'statusCode': 200,
-        #     'body': json.dumps(ssmKey + ' AMI Copying initiated successfully')
-        # }
     else:
         snsNotify(400)
         print("AMI Copying failed")
-        # return {
-        #     'statusCode': 400,
-        #     'body': json.dumps(ssmKey + ' AMI Copying failed')
-        # }
 
 
 # Read config file
